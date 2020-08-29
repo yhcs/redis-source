@@ -698,12 +698,13 @@ void sentinelEvent(int level, char *type, sentinelRedisInstance *ri,
     if (level >= server.verbosity)
         serverLog(level, "%s %s", type, msg);
 
+    printf("%s channel: %s, payload: %s level: %d, LL_DEBUG: %d start\n", fun, (sds)(channel->ptr), (sds)(payload->ptr), level, LL_DEBUG);
     /* Publish the message via Pub/Sub if it's not a debugging one. */
     if (level != LL_DEBUG)
     {
+        printf("%s channel: %s, payload: %s level: %d, LL_DEBUG: %d in\n", fun, (sds)(channel->ptr), (sds)(payload->ptr), level, LL_DEBUG);
         channel = createStringObject(type, strlen(type));
         payload = createStringObject(msg, strlen(msg));
-        printf("%s channel: %s, payload: %s\n", fun, (sds)(channel->ptr), (sds)(payload->ptr));
         pubsubPublishMessage(channel, payload);
         decrRefCount(channel);
         decrRefCount(payload);
