@@ -364,13 +364,13 @@ int pubsubPublishMessage(robj *channel, robj *message)
             client *c = ln->value;
             addReplyPubsubMessage(c, channel, message);
             receivers++;
-            printf("%s channel: %s, client: %s", fun, (sds)(channel->ptr), (sds)(c->name));
+            printf("%s channel: %s, client: %s\n", fun, (sds)(channel->ptr), (sds)(c->name));
         }
-        printf("%s channel: %s found", fun, (sds)(channel->ptr));
+        printf("%s channel: %s found\n", fun, (sds)(channel->ptr));
     }
     else
     {
-        printf("%s channel: %s not found", fun, (sds)(channel->ptr));
+        printf("%s channel: %s not found\n", fun, (sds)(channel->ptr));
     }
     /* Send to clients listening to matching channels */
     di = dictGetIterator(server.pubsub_patterns_dict);

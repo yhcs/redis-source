@@ -660,7 +660,7 @@ void sentinelEvent(int level, char *type, sentinelRedisInstance *ri,
     va_list ap;
     char msg[LOG_MAX_LEN];
     robj *channel, *payload;
-
+    printf("%s level: %d, debug: %d, start\n", fun, level, LL_DEBUG);
     /* Handle %@ */
     if (fmt[0] == '%' && fmt[1] == '@')
     {
@@ -703,7 +703,7 @@ void sentinelEvent(int level, char *type, sentinelRedisInstance *ri,
     {
         channel = createStringObject(type, strlen(type));
         payload = createStringObject(msg, strlen(msg));
-        printf("%s channel: %s, payload: %s", fun, (sds)(channel->ptr), (sds)(payload->ptr));
+        printf("%s channel: %s, payload: %s\n", fun, (sds)(channel->ptr), (sds)(payload->ptr));
         pubsubPublishMessage(channel, payload);
         decrRefCount(channel);
         decrRefCount(payload);
@@ -735,7 +735,7 @@ void sentinelGenerateInitialMonitorEvents(void)
     while ((de = dictNext(di)) != NULL)
     {
         sentinelRedisInstance *ri = dictGetVal(de);
-        printf("%s master.Name: %s, ip: %s, port: %d", fun, ri->name, ri->addr->ip, ri->addr->port);
+        printf("%s master.Name: %s, ip: %s, port: %d\n", fun, ri->name, ri->addr->ip, ri->addr->port);
         sentinelEvent(LL_WARNING, "+monitor", ri, "%@ quorum %d", ri->quorum);
     }
     dictReleaseIterator(di);
